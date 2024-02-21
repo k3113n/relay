@@ -5,5 +5,14 @@
   "main": "index.js",
   "repository": "https://github.com/k3113n/relay.git",
   "author": "Kellen Sullivan <142142508+k3113n@users.noreply.github.com>",
-  "license": "Unlicense"
+  "license": "Unlicense",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
 }
