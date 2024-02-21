@@ -10,17 +10,20 @@ const isEmpty = (variable) => {
 };
 
 let server = null;
+let last_message = "";
 let relay = new WebSocket.Server({port: 443});
 clients = {};    
 
-relay.on('connection', function (client, req) {
+relay.on('connection', function (client) {
     let user = crypto.randomUUID();
     clients[user] = client;
+    client.send(last_message);
 
     if(!server) {
         server = new WebSocket(process.env.SERVER);
 
-        server.on('message', function (message){         
+        server.on('message', function (message){ 
+            last_message = message;        
             Object.values(clients).forEach(client => client.send(message));
         });
 
