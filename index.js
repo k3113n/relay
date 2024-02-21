@@ -21,7 +21,7 @@ relay.on('connection', function (client, req) {
         server = new WebSocket(process.env.SERVER);
 
         server.on('message', function (message){         
-            client.send(message);
+            Object.values(clients).forEach(client => client.send(message));
         });
 
         server.on('close', function() {
