@@ -1,5 +1,7 @@
 //require('dotenv').config();
-let relay = new (require('ws')).Server({port: 443});
+const WebSocket = require('ws');
+
+let relay = new WebSocket.Server({port: 443});
 clients = {};    
 relay.on('connection', function (client, req) {
     let user = crypto.randomUUID();
