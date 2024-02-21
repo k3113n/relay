@@ -1,6 +1,14 @@
 //require('dotenv').config();
 const WebSocket = require('ws');
 
+const isEmpty = (variable) => {
+    return (
+      variable &&
+      Object.keys(variable).length === 0 &&
+      variable.constructor === Object
+    );
+};
+
 let relay = new WebSocket.Server({port: 443});
 clients = {};    
 relay.on('connection', function (client, req) {
