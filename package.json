@@ -1,0 +1,9 @@
+{
+  "name": "relay",
+  "version": "1.0.0",
+  "description": "websocket to client one-way messenger service",
+  "main": "index.js",
+  "repository": "https://github.com/k3113n/relay.git",
+  "author": "Kellen Sullivan <142142508+k3113n@users.noreply.github.com>",
+  "license": "Unlicense"
+}
