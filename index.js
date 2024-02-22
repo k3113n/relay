@@ -1,5 +1,6 @@
 //require('dotenv').config();
 const WebSocket = require('ws');
+const crypto = require('crypto');
 
 const isEmpty = (variable) => {
     return (
@@ -12,7 +13,7 @@ const isEmpty = (variable) => {
 let server = null;
 let last_message = "";
 let relay = new WebSocket.Server({port: 443});
-clients = {};    
+let clients = {};    
 
 relay.on('connection', function (client) {
     let user = crypto.randomUUID();
@@ -22,18 +23,20 @@ relay.on('connection', function (client) {
     if(!server) {
         server = new WebSocket(process.env.SERVER);
 
-        server.on('message', function (message){ 
-            last_message = message;        
-            Object.values(clients).forEach(client => client.send(message));
-        });
-
-        server.on('close', function() {
-            server = null;
+        server.on('open', function () {
+            server.on('message', function (message){ 
+                last_message = message;        
+                Object.values(clients).forEach(client => client.send(message));
+            });
+    
+            server.on('close', function() {
+                server = null;
+            });
         });
     }
 
     client.on('close', function () {
         delete clients[user];
-        if(isEmpty(clients) && server) server.close();
+        if(isEmpty(clients) && server && server.readyState === WebSocket.OPEN) server.close();
     });
 });
